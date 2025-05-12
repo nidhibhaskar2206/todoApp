@@ -1,3 +1,4 @@
+```javascript
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -9,13 +10,23 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
+      const { text } = action.payload;
+      if (typeof text !== 'string' || text.trim() === '') {
+        return state; 
+      }
+      const newTask = { id: Date.now(), text };
       return {
         ...state,
-        tasks: [...state.tasks, { id: 22, text: { hjvjbad } }],
+        tasks: [...state.tasks, newTask],
       };
     },
     deleteTodo: (state, action) => {
-      state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      const idToDelete = action.payload;
+      if (typeof idToDelete !== 'number') {
+        return state; 
+
+      }
+      state.tasks = state.tasks.filter((task) => task.id !== idToDelete);
     },
   },
 });
@@ -23,3 +34,4 @@ const todoSlice = createSlice({
 export const { addTodo, deleteTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;
+```
